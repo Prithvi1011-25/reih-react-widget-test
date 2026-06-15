@@ -41,7 +41,7 @@ export const LISTING_MEDIA: ReihMediaItem[] = [
     image_url: '/images/apartment-building.png',
   },
   {
-    image_url: '/images/large-test-30mb.jpg',
+    image_url: '/images/large-test-25mb.jpg',
   },
 ];
 

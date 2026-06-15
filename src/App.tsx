@@ -132,8 +132,8 @@ function App() {
                 alt={
                   media.image_url.includes('apartment-building')
                     ? 'Exterior view of a multi-story apartment building'
-                    : media.image_url.includes('large-test-30mb')
-                      ? 'Large test image (~30MB+) for widget stress testing'
+                    : media.image_url.includes('large-test-25mb')
+                      ? 'Large test image (~25MB) for widget stress testing'
                       : `Listing photo ${index + 2}`
                 }
                 label={`gallery photo ${index + 1}`}
