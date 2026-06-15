@@ -31,7 +31,6 @@ export function buildWidgetConfig() {
   return {
     media: LISTING_MEDIA,
     mode: 'simple' as const,
-    user_id: 'demo-user-001',
     branding: {
       fav_icon: 'https://placehold.co/32x32/png?text=F',
       logo: 'https://placehold.co/200x60/png?text=Logo',
