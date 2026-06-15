@@ -134,7 +134,9 @@ function App() {
                     ? 'Exterior view of a multi-story apartment building'
                     : media.image_url.includes('large-test-25mb')
                       ? 'Large test image (~25MB) for widget stress testing'
-                      : `Listing photo ${index + 2}`
+                      : media.image_url.includes('large-test-30mb')
+                        ? 'Large test image (~35MB) for widget stress testing'
+                        : `Listing photo ${index + 2}`
                 }
                 label={`gallery photo ${index + 1}`}
                 onOpen={handleOpenSingle}
