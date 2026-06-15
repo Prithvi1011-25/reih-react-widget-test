@@ -35,13 +35,31 @@ export const LISTING_MEDIA: ReihMediaItem[] = [
   },
   {
     image_url:
-      'https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=1704&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      'https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=1704&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    image_url: '/images/apartment-building.png',
   },
 ];
 
+/** Local /images/* paths need a full URL for the widget backend to fetch them */
+export function resolveMediaUrl(url: string): string {
+  if (url.startsWith('/') && typeof window !== 'undefined') {
+    return `${window.location.origin}${url}`;
+  }
+  return url;
+}
+
+export function resolveListingMedia(media: ReihMediaItem[] = LISTING_MEDIA): ReihMediaItem[] {
+  return media.map((item) => ({
+    ...item,
+    image_url: resolveMediaUrl(item.image_url),
+  }));
+}
+
 export function buildWidgetConfig() {
   return {
-    media: LISTING_MEDIA,
+    media: resolveListingMedia(),
     mode: 'simple' as const,
     branding: {
       fav_icon: 'https://placehold.co/32x32/png?text=F',

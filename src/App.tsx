@@ -5,6 +5,8 @@ import {
   WIDGET_PUBLIC_KEY,
   WIDGET_SCRIPT_URL,
   buildWidgetConfig,
+  resolveListingMedia,
+  resolveMediaUrl,
   type ReihMediaItem,
 } from './widgetConfig';
 import './App.css';
@@ -45,7 +47,12 @@ function App() {
     try {
       // Always pass media explicitly so the widget creates a fresh session.
       // Calling open() with no args re-shows the previous session unchanged.
-      await window.reihWidget.open({ media });
+      await window.reihWidget.open({
+        media: media.map((item) => ({
+          ...item,
+          image_url: resolveMediaUrl(item.image_url),
+        })),
+      });
     } catch (error) {
       console.error('Widget open failed:', error);
     }
@@ -53,7 +60,7 @@ function App() {
 
   const handleOpenAll = useCallback(async () => {
     console.log('Open button clicked (all listing media)');
-    await openWidget(LISTING_MEDIA);
+    await openWidget(resolveListingMedia());
   }, [openWidget]);
 
   const handleOpenSingle = useCallback(
@@ -122,7 +129,11 @@ function App() {
               <MediaWithWidgetButton
                 key={media.image_url}
                 media={media}
-                alt={`Listing photo ${index + 2}`}
+                alt={
+                  media.image_url.includes('apartment-building')
+                    ? 'Exterior view of a multi-story apartment building'
+                    : `Listing photo ${index + 2}`
+                }
                 label={`gallery photo ${index + 1}`}
                 onOpen={handleOpenSingle}
               />
