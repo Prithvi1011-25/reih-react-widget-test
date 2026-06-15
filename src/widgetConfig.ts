@@ -46,6 +46,10 @@ export const LISTING_MEDIA: ReihMediaItem[] = [
   {
     image_url: '/images/large-test-30mb.jpg',
   },
+  {
+    // Invalid format test — plain text file, not an image
+    image_url: '/images/invalid-format.txt',
+  },
 ];
 
 /** Local /images/* paths need a full URL for the widget backend to fetch them */

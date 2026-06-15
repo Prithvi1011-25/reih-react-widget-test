@@ -136,7 +136,9 @@ function App() {
                       ? 'Large test image (~25MB) for widget stress testing'
                       : media.image_url.includes('large-test-30mb')
                         ? 'Large test image (~35MB) for widget stress testing'
-                        : `Listing photo ${index + 2}`
+                        : media.image_url.includes('invalid-format')
+                          ? 'Invalid format test (text file, not an image)'
+                          : `Listing photo ${index + 2}`
                 }
                 label={`gallery photo ${index + 1}`}
                 onOpen={handleOpenSingle}
