@@ -5,7 +5,7 @@ type MediaWithWidgetButtonProps = {
   alt: string;
   className?: string;
   label: string;
-  onOpen: (media: ReihMediaItem) => void;
+  onOpen: (media?: ReihMediaItem) => void | Promise<void>;
 };
 
 export function MediaWithWidgetButton({

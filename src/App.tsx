@@ -59,7 +59,10 @@ function App() {
   }, [openWidget]);
 
   const handleOpenSingle = useCallback(
-    async (media: ReihMediaItem) => {
+    async (media?: ReihMediaItem) => {
+      if (!media) {
+        return;
+      }
       console.log('Floating button clicked:', media.image_url);
       await openWidget([media]);
     },
@@ -86,9 +89,8 @@ function App() {
           <h1>REIH React Widget Compatibility Test</h1>
           <p className="listing-intro__description">
             This sample real estate listing page tests the ReimagineHome hybrid
-            iframe widget inside React. Each photo has a floating Reimagine
-            button, or use the main button below to open the widget with all
-            listing images.
+            iframe widget inside React. The hero Reimagine button opens all
+            listing photos; gallery buttons open a single photo each.
           </p>
         </section>
 
@@ -98,7 +100,9 @@ function App() {
             alt="Modern home exterior with landscaped front yard"
             className="hero__image"
             label="hero photo"
-            onOpen={handleOpenSingle}
+            onOpen={() => {
+              void handleOpenAll();
+            }}
           />
         </section>
 
@@ -108,8 +112,8 @@ function App() {
           <p className="listing-details__meta">4 bed · 3 bath · 2,450 sq ft</p>
           <p className="listing-details__copy">
             Bright open-concept home with vaulted ceilings, updated kitchen, and
-            a private backyard patio. Click any floating Reimagine button on a
-            photo to open the widget for that room.
+            a private backyard patio. Use the hero Reimagine button for all
+            photos, or click a gallery button to reimagine that room only.
           </p>
         </section>
 
