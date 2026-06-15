@@ -40,6 +40,9 @@ export const LISTING_MEDIA: ReihMediaItem[] = [
   {
     image_url: '/images/apartment-building.png',
   },
+  {
+    image_url: '/images/large-test-30mb.jpg',
+  },
 ];
 
 /** Local /images/* paths need a full URL for the widget backend to fetch them */
