@@ -36,18 +36,16 @@ function App() {
     document.body.appendChild(script);
   }, []);
 
-  const openWidget = useCallback(async (media?: ReihMediaItem[]) => {
+  const openWidget = useCallback(async (media: ReihMediaItem[]) => {
     if (!window.reihWidget || typeof window.reihWidget.open !== 'function') {
       console.error('reihWidget is not available yet');
       return;
     }
 
     try {
-      if (media) {
-        await window.reihWidget.open({ media });
-      } else {
-        await window.reihWidget.open();
-      }
+      // Always pass media explicitly so the widget creates a fresh session.
+      // Calling open() with no args re-shows the previous session unchanged.
+      await window.reihWidget.open({ media });
     } catch (error) {
       console.error('Widget open failed:', error);
     }
@@ -55,7 +53,7 @@ function App() {
 
   const handleOpenAll = useCallback(async () => {
     console.log('Open button clicked (all listing media)');
-    await openWidget();
+    await openWidget(LISTING_MEDIA);
   }, [openWidget]);
 
   const handleOpenSingle = useCallback(
