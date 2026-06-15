@@ -5,8 +5,8 @@ export type ReihMediaItem = {
 export const WIDGET_SCRIPT_URL =
   'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app/widget.js';
 
-/** TEMP: invalid key for abuse/validation testing — revert to 'public_key' after test */
-export const WIDGET_PUBLIC_KEY = 'invalid-key-test-123';
+/** Replace with your real public key from ReimagineHome */
+export const WIDGET_PUBLIC_KEY = 'public_key';
 
 export const LISTING_MEDIA: ReihMediaItem[] = [
   {
