@@ -1,5 +1,5 @@
 import { MediaWithWidgetButton } from '../MediaWithWidgetButton';
-import { LISTING_MEDIA, type ReihMediaItem } from '../widgetConfig';
+import { getWidgetHostCssVars, LISTING_MEDIA, type ReihMediaItem } from '../widgetConfig';
 import { SiteHeader } from './SiteHeader';
 import '../listing.css';
 
@@ -39,7 +39,7 @@ export function ListingDemoPage({
   const [heroMedia, ...galleryMedia] = LISTING_MEDIA;
 
   return (
-    <>
+    <div className="listing-shell" style={getWidgetHostCssVars()}>
       <SiteHeader active={activeNav} showListingAnchors />
       <main className="listing-page">
         <section className="listing-intro" id="listing">
@@ -103,6 +103,6 @@ export function ListingDemoPage({
           </button>
         </section>
       </main>
-    </>
+    </div>
   );
 }

@@ -9,7 +9,7 @@ declare global {
       user_id?: string;
       sidebar_position?: 'left' | 'right';
       branding: Record<string, string>;
-      language: Array<{
+      language?: Array<{
         code: string;
         name: string;
         nativeName: string;
@@ -19,7 +19,12 @@ declare global {
       onClose?: () => void;
     };
     reihWidget?: {
-      open: (options?: { media?: ReihMediaItem[] }) => Promise<void>;
+      open: (options?: {
+        media?: ReihMediaItem[];
+        mode?: string;
+        branding?: Record<string, string>;
+        sidebar_position?: 'left' | 'right';
+      }) => Promise<void>;
       close: () => void;
       destroy: () => void;
     };

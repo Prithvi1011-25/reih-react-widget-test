@@ -18,7 +18,7 @@ export function ScriptEmbedPage() {
 
   useEffect(() => {
     window.reihWidgetConfig = buildWidgetConfig();
-    console.log('[script-embed] Widget config created');
+    console.log('[script-embed] Widget config created', window.reihWidgetConfig.branding);
   }, []);
 
   useEffect(() => {

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { SiteHeader } from '../components/SiteHeader';
+import { getWidgetHostCssVars } from '../widgetConfig';
 import '../listing.css';
 
 export function HomePage() {
   return (
-    <>
+    <div className="listing-shell" style={getWidgetHostCssVars()}>
       <SiteHeader active="home" />
       <main className="listing-page home-page">
         <h1>REIH React Widget Compatibility Test</h1>
@@ -33,6 +34,6 @@ export function HomePage() {
           </Link>
         </div>
       </main>
-    </>
+    </div>
   );
 }

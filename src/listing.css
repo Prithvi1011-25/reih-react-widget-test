@@ -42,7 +42,7 @@
 
 .site-header__nav a:hover,
 .site-header__nav a.is-active {
-  color: #0f766e;
+  color: var(--reih-primary, #3ed37a);
 }
 
 .listing-page {
@@ -57,8 +57,8 @@
   padding: 0.375rem 0.75rem;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #4c1d95;
-  background: #ede9fe;
+  color: var(--reih-text-primary, #071121);
+  background: color-mix(in srgb, var(--reih-primary, #3ed37a) 18%, white);
   border-radius: 999px;
 }
 
@@ -107,14 +107,18 @@
 }
 
 .home-card:hover {
-  border-color: #0f766e;
-  box-shadow: 0 8px 24px rgba(15, 118, 110, 0.12);
+  border-color: var(--reih-primary, #3ed37a);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--reih-primary, #3ed37a) 22%, transparent);
   transform: translateY(-2px);
 }
 
 .home-card--primary {
-  border-color: #c4b5fd;
-  background: linear-gradient(180deg, #faf5ff 0%, #fff 100%);
+  border-color: color-mix(in srgb, var(--reih-primary, #3ed37a) 45%, white);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--reih-primary, #3ed37a) 10%, white) 0%,
+    #fff 100%
+  );
 }
 
 .home-card h2 {
@@ -160,20 +164,20 @@
   font-size: 0.8125rem;
   font-weight: 600;
   color: #fff;
-  background: rgba(108, 99, 255, 0.95);
+  background: color-mix(in srgb, var(--reih-primary, #3ed37a) 95%, black);
   border-radius: 999px;
-  box-shadow: 0 4px 14px rgba(76, 29, 149, 0.35);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--reih-primary, #3ed37a) 40%, transparent);
   transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
 }
 
 .media-frame__fab:hover {
   transform: translateY(-1px);
-  background: #6c63ff;
-  box-shadow: 0 6px 18px rgba(76, 29, 149, 0.45);
+  background: var(--reih-primary, #3ed37a);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--reih-primary, #3ed37a) 50%, transparent);
 }
 
 .media-frame__fab:focus-visible {
-  outline: 3px solid rgba(108, 99, 255, 0.45);
+  outline: 3px solid color-mix(in srgb, var(--reih-primary, #3ed37a) 45%, transparent);
   outline-offset: 2px;
 }
 
@@ -197,7 +201,7 @@
 .listing-details__price {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #0f766e;
+  color: var(--reih-primary, #3ed37a);
   margin-bottom: 0.5rem;
 }
 
@@ -259,19 +263,23 @@
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(135deg, #0f766e, #0d9488);
+  background: linear-gradient(
+    135deg,
+    var(--reih-primary, #3ed37a),
+    color-mix(in srgb, var(--reih-primary, #3ed37a) 82%, black)
+  );
   border-radius: 8px;
-  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.35);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--reih-primary, #3ed37a) 40%, transparent);
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
 .open-widget-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.4);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--reih-primary, #3ed37a) 48%, transparent);
 }
 
 .open-widget-btn:focus-visible {
-  outline: 3px solid rgba(15, 118, 110, 0.45);
+  outline: 3px solid color-mix(in srgb, var(--reih-primary, #3ed37a) 45%, transparent);
   outline-offset: 2px;
 }
 

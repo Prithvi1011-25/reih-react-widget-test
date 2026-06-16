@@ -69,17 +69,26 @@ export function clearReihLoader(): void {
   document.getElementById(REIH_LOADER_ID)?.remove();
 }
 
+/** Minimal widget API used by both CDN and npm integrations. */
+export type ReihWidgetOpener = {
+  open: (overrides?: Record<string, unknown>) => Promise<void>;
+};
+
 /** Host-side open helper — clears stale loader, then opens with resolved media. */
 export async function openReihWithMedia(
-  widget: NonNullable<Window['reihWidget']>,
+  widget: ReihWidgetOpener,
   media: ReihMediaItem[],
 ): Promise<void> {
   clearReihLoader();
+  const config = buildWidgetConfig();
   await widget.open({
     media: media.map((item) => ({
       ...item,
       image_url: resolveMediaUrl(item.image_url),
     })),
+    mode: config.mode,
+    branding: config.branding,
+    sidebar_position: config.sidebar_position,
   });
 }
 
@@ -154,20 +163,17 @@ const WIDGET_BRANDING = {
   footer_text: '',
 };
 
-const WIDGET_LANGUAGE = [
-  {
-    code: 'en-US',
-    name: 'English (United States)',
-    nativeName: 'English (US)',
-  },
-  {
-    code: 'en-GB',
-    name: 'English (United Kingdom)',
-    nativeName: 'English (UK)',
-  },
-  { code: 'pl-PL', name: 'Polish', nativeName: 'Polski' },
-  { code: 'es-ES', name: 'Spanish', nativeName: 'Español' },
-];
+export { WIDGET_BRANDING };
+
+/** CSS-safe hex for host page accents (strips 8-digit alpha suffix). */
+export function getWidgetHostCssVars(): Record<string, string> {
+  const textPrimary = WIDGET_BRANDING.text_primary.replace(/ff$/i, '');
+  return {
+    '--reih-primary': WIDGET_BRANDING.primary_color,
+    '--reih-text-primary': textPrimary,
+    '--reih-text-secondary': WIDGET_BRANDING.text_secondary,
+  };
+}
 
 export function buildWidgetConfig() {
   return {
@@ -176,7 +182,6 @@ export function buildWidgetConfig() {
     mode: 'simple' as const,
     branding: WIDGET_BRANDING,
     sidebar_position: 'right' as const,
-    language: WIDGET_LANGUAGE,
     onComplete: (detail: unknown) => {
       console.log('[reih] onComplete:', detail);
     },
@@ -198,7 +203,6 @@ export function buildNpmWidgetConfigureOptions() {
     mode: base.mode,
     branding: base.branding,
     sidebar_position: base.sidebar_position,
-    language: base.language,
     onComplete: base.onComplete,
     onError: base.onError,
     onClose: base.onClose,
