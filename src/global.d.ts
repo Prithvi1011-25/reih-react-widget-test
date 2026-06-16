@@ -3,6 +3,7 @@ import type { ReihMediaItem } from './widgetConfig';
 declare global {
   interface Window {
     reihWidgetConfig?: {
+      public_key?: string;
       media: ReihMediaItem[];
       mode: string;
       user_id?: string;
@@ -12,9 +13,9 @@ declare global {
         name: string;
         nativeName: string;
       }>;
-      onComplete: (detail: unknown) => void;
-      onError: (err: unknown) => void;
-      onClose: () => void;
+      onComplete?: (detail: unknown) => void;
+      onError?: (err: unknown) => void;
+      onClose?: () => void;
     };
     reihWidget?: {
       open: (options?: { media?: ReihMediaItem[] }) => Promise<void>;
