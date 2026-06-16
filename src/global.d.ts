@@ -17,11 +17,6 @@ declare global {
         sub_heading: string;
         footer_text: string;
       };
-      language?: Array<{
-        code: string;
-        name: string;
-        nativeName: string;
-      }>;
       onComplete?: (detail: unknown) => void;
       onError?: (err: unknown) => void;
       onClose?: () => void;
