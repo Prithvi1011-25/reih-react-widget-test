@@ -36,8 +36,14 @@ export var LISTING_MEDIA = [
       "https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=1704&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   { image_url: "/images/apartment-building.png" },
-  { image_url: "/images/large-test-25mb.jpg" },
-  { image_url: "/images/large-test-30mb.jpg" },
+  {
+    image_url:
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&h=800&fit=crop",
+  },
+  {
+    image_url:
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop",
+  },
   { image_url: "/images/invalid-format.txt" },
   {
     image_url:
@@ -184,11 +190,11 @@ export function getGalleryAlt(media, index) {
   if (media.image_url.indexOf("apartment-building") !== -1) {
     return "Exterior view of a multi-story apartment building";
   }
-  if (media.image_url.indexOf("large-test-25mb") !== -1) {
-    return "Large test image (~25MB) for widget stress testing";
+  if (media.image_url.indexOf("photo-1600047509807") !== -1) {
+    return "Master bedroom with natural light";
   }
-  if (media.image_url.indexOf("large-test-30mb") !== -1) {
-    return "Large test image (~35MB) for widget stress testing";
+  if (media.image_url.indexOf("photo-1600607687920") !== -1) {
+    return "Open-plan living and dining area";
   }
   if (media.image_url.indexOf("invalid-format") !== -1) {
     return "Invalid format test (text file, not an image)";
