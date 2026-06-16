@@ -80,15 +80,15 @@ export async function openReihWithMedia(
   media: ReihMediaItem[],
 ): Promise<void> {
   clearReihLoader();
-  const branding = buildWidgetBranding();
   await widget.open({
     media: media.map((item) => ({
       ...item,
       image_url: resolveMediaUrl(item.image_url),
     })),
     mode: 'simple',
-    branding,
+    branding: buildWidgetBranding(),
     sidebar_position: 'right',
+    language: buildWidgetLanguage(),
   });
 }
 
@@ -153,6 +153,21 @@ export function resolveListingMedia(media: ReihMediaItem[] = LISTING_MEDIA): Rei
   }));
 }
 
+export type ReihWidgetLanguage = {
+  code: string;
+  name: string;
+  nativeName: string;
+};
+
+export function buildWidgetLanguage(): ReihWidgetLanguage[] {
+  return [
+    { code: 'en-US', name: 'English (United States)', nativeName: 'English (US)' },
+    { code: 'en-GB', name: 'English (United Kingdom)', nativeName: 'English (UK)' },
+    { code: 'pl-PL', name: 'Polish', nativeName: 'Polski' },
+    { code: 'es-ES', name: 'Spanish', nativeName: 'Español' },
+  ];
+}
+
 export type ReihWidgetBranding = {
   logo: string;
   text_primary: string;
@@ -208,6 +223,7 @@ export function buildScriptEmbedWidgetConfig() {
     mode: 'simple' as const,
     branding: buildWidgetBranding(),
     sidebar_position: 'right' as const,
+    language: buildWidgetLanguage(),
     ...widgetCallbacks,
   };
 }
@@ -227,6 +243,7 @@ export function buildNpmWidgetConfigureOptions() {
     mode: 'simple' as const,
     branding: buildWidgetBranding(),
     sidebar_position: 'right' as const,
+    language: buildWidgetLanguage(),
     ...widgetCallbacks,
   };
 }

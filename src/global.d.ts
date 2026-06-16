@@ -1,4 +1,4 @@
-import type { ReihMediaItem } from './widgetConfig';
+import type { ReihMediaItem, ReihWidgetLanguage } from './widgetConfig';
 
 declare global {
   interface Window {
@@ -17,6 +17,7 @@ declare global {
         sub_heading: string;
         footer_text: string;
       };
+      language?: ReihWidgetLanguage[];
       onComplete?: (detail: unknown) => void;
       onError?: (err: unknown) => void;
       onClose?: () => void;
@@ -35,6 +36,7 @@ declare global {
           footer_text: string;
         };
         sidebar_position?: 'left' | 'right';
+        language?: ReihWidgetLanguage[];
       }) => Promise<void>;
       close: () => void;
       destroy: () => void;
