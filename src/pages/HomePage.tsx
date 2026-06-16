@@ -32,6 +32,19 @@ export function HomePage() {
               <code>open()</code>.
             </p>
           </Link>
+
+          <a
+            href="https://reih-vanilla-widget-test.vercel.app"
+            className="home-card"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <h2>Vanilla JS (CDN Script)</h2>
+            <p>
+              Plain HTML/CSS/JS host page deployed separately on Vercel — same CDN
+              script-embed integration without React.
+            </p>
+          </a>
         </div>
       </main>
     </div>
