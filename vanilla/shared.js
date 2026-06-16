@@ -35,7 +35,10 @@ export var LISTING_MEDIA = [
     image_url:
       "https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=1704&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
-  { image_url: "/images/apartment-building.png" },
+  {
+    image_url:
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
+  },
   {
     image_url:
       "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&h=800&fit=crop",
@@ -187,7 +190,7 @@ export function createWidgetOpener(getWidget, logPrefix) {
 }
 
 export function getGalleryAlt(media, index) {
-  if (media.image_url.indexOf("apartment-building") !== -1) {
+  if (media.image_url.indexOf("photo-1545324418") !== -1) {
     return "Exterior view of a multi-story apartment building";
   }
   if (media.image_url.indexOf("photo-1600047509807") !== -1) {
