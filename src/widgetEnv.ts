@@ -1,4 +1,4 @@
-/** Dev widget iframe app — matches the CDN script-embed environment */
+/** Dev widget iframe app */
 export const WIDGET_DEV_APP_URL =
   'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app';
 

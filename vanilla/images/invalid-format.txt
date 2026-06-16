@@ -1,1 +1,0 @@
-This is not a valid image file — used to test invalid media format handling.
