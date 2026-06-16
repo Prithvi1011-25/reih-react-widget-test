@@ -7,6 +7,9 @@ export {
   WIDGET_DEV_APP_URL,
 } from './widgetEnv';
 
+export const WIDGET_SCRIPT_URL =
+  'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app/widget.js';
+
 /** Replace with your real public key from ReimagineHome */
 export const WIDGET_PUBLIC_KEY = 'public_key';
 
@@ -70,7 +73,7 @@ export function clearReihLoader(): void {
   document.getElementById(REIH_LOADER_ID)?.remove();
 }
 
-/** Minimal widget API for the npm package integration. */
+/** Minimal widget API used by both CDN and npm integrations. */
 export type ReihWidgetOpener = {
   open: (overrides?: Record<string, unknown>) => Promise<void>;
 };
@@ -90,6 +93,52 @@ export async function openReihWithMedia(
     branding: buildWidgetBranding(),
     sidebar_position: 'right',
     language: buildWidgetLanguage(),
+  });
+}
+
+/** Wait until the CDN-injected window.reihWidget API is ready. */
+export function waitForReihWidget(
+  timeoutMs = 30_000,
+): Promise<NonNullable<Window['reihWidget']>> {
+  const existing = window.reihWidget;
+  if (existing && typeof existing.open === 'function') {
+    return Promise.resolve(existing);
+  }
+
+  return new Promise((resolve, reject) => {
+    const script = document.querySelector<HTMLScriptElement>(
+      'script[src*="widget.js"]',
+    );
+
+    let settled = false;
+    const finish = (widget: NonNullable<Window['reihWidget']>) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      clearInterval(poller);
+      script?.removeEventListener('load', tryResolve);
+      resolve(widget);
+    };
+
+    const tryResolve = () => {
+      const widget = window.reihWidget;
+      if (widget && typeof widget.open === 'function') {
+        finish(widget);
+      }
+    };
+
+    script?.addEventListener('load', tryResolve);
+    const poller = window.setInterval(tryResolve, 50);
+
+    const timer = window.setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      clearInterval(poller);
+      script?.removeEventListener('load', tryResolve);
+      reject(new Error('[reih] Widget script did not load in time'));
+    }, timeoutMs);
+
+    tryResolve();
   });
 }
 
@@ -168,7 +217,29 @@ const widgetCallbacks = {
   },
 };
 
-/** Config for reimaginehome-widget npm package — used in configure() */
+/**
+ * CDN script-embed config for window.reihWidgetConfig.
+ * public_key comes from the <script data-public-key> attribute, not this object.
+ */
+export function buildScriptEmbedWidgetConfig() {
+  return {
+    media: resolveListingMedia(),
+    mode: 'simple' as const,
+    branding: buildWidgetBranding(),
+    sidebar_position: 'right' as const,
+    language: buildWidgetLanguage(),
+    ...widgetCallbacks,
+  };
+}
+
+export function buildWidgetConfig() {
+  return {
+    public_key: WIDGET_PUBLIC_KEY,
+    ...buildScriptEmbedWidgetConfig(),
+  };
+}
+
+/** Config for reimaginehome-widget npm package — includes public_key in configure() */
 export function buildNpmWidgetConfigureOptions() {
   return {
     public_key: WIDGET_PUBLIC_KEY,

@@ -60,7 +60,7 @@ export function PackageIntegrationPage() {
       activeNav="package"
       title="REIH React Widget — npm Package"
       integrationBadge="Integration: reimaginehome-widget npm package"
-      description="Tests the ReimagineHome widget via the reimaginehome-widget npm package using reihWidget.configure() and reihWidget.open()."
+      description="Tests the ReimagineHome widget via the reimaginehome-widget npm package using reihWidget.configure() and reihWidget.open() — no CDN script tag."
       onOpenAll={handleOpenAll}
       onOpenSingle={handleOpenSingle}
     />

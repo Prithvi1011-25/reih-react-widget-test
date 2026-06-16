@@ -9,7 +9,7 @@ import {
 
 /**
  * reimaginehome-widget@0.0.2 is published with REIH_ENV=prod. Rewrite to dev
- * so the npm package hits the dev widget backend.
+ * so /package hits the same backend as the CDN script on /script-embed.
  */
 function reihWidgetDevEnv(): Plugin {
   return {

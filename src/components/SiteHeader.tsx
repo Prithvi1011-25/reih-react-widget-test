@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 type SiteHeaderProps = {
-  active?: 'home' | 'package';
+  active?: 'home' | 'script-embed' | 'package';
   showListingAnchors?: boolean;
 };
 
@@ -24,10 +24,16 @@ export function SiteHeader({ active, showListingAnchors }: SiteHeaderProps) {
             Home
           </Link>
           <Link
+            to="/script-embed"
+            className={active === 'script-embed' ? 'is-active' : undefined}
+          >
+            CDN Script
+          </Link>
+          <Link
             to="/package"
             className={active === 'package' ? 'is-active' : undefined}
           >
-            Widget Demo
+            npm Package
           </Link>
         </nav>
       </div>

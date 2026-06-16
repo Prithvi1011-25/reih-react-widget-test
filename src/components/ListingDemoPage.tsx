@@ -4,7 +4,7 @@ import { SiteHeader } from './SiteHeader';
 import '../listing.css';
 
 type ListingDemoPageProps = {
-  activeNav: 'package';
+  activeNav: 'script-embed' | 'package';
   title: string;
   description: string;
   integrationBadge: string;
