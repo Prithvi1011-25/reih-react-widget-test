@@ -3,7 +3,7 @@ import { ListingDemoPage } from '../components/ListingDemoPage';
 import {
   WIDGET_PUBLIC_KEY,
   WIDGET_SCRIPT_URL,
-  buildWidgetConfig,
+  buildScriptEmbedWidgetConfig,
   clearReihLoader,
   openReihWithMedia,
   resolveListingMedia,
@@ -17,8 +17,11 @@ export function ScriptEmbedPage() {
   const openingRef = useRef(false);
 
   useEffect(() => {
-    window.reihWidgetConfig = buildWidgetConfig();
-    console.log('[script-embed] Widget config created', window.reihWidgetConfig.branding);
+    const config = buildScriptEmbedWidgetConfig();
+    // public_key comes from <script data-public-key>, not window.reihWidgetConfig
+    (window as unknown as { reihWidgetConfig: typeof config }).reihWidgetConfig =
+      config;
+    console.log('[script-embed] Widget config created', config.branding);
   }, []);
 
   useEffect(() => {

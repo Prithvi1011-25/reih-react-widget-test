@@ -8,7 +8,15 @@ declare global {
       mode: string;
       user_id?: string;
       sidebar_position?: 'left' | 'right';
-      branding: Record<string, string>;
+      branding?: {
+        logo: string;
+        text_primary: string;
+        text_secondary: string;
+        primary_color: string;
+        heading: string;
+        sub_heading: string;
+        footer_text: string;
+      };
       language?: Array<{
         code: string;
         name: string;
@@ -22,7 +30,15 @@ declare global {
       open: (options?: {
         media?: ReihMediaItem[];
         mode?: string;
-        branding?: Record<string, string>;
+        branding?: {
+          logo: string;
+          text_primary: string;
+          text_secondary: string;
+          primary_color: string;
+          heading: string;
+          sub_heading: string;
+          footer_text: string;
+        };
         sidebar_position?: 'left' | 'right';
       }) => Promise<void>;
       close: () => void;

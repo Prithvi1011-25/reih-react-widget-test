@@ -80,15 +80,15 @@ export async function openReihWithMedia(
   media: ReihMediaItem[],
 ): Promise<void> {
   clearReihLoader();
-  const config = buildWidgetConfig();
+  const branding = buildWidgetBranding();
   await widget.open({
     media: media.map((item) => ({
       ...item,
       image_url: resolveMediaUrl(item.image_url),
     })),
-    mode: config.mode,
-    branding: config.branding,
-    sidebar_position: config.sidebar_position,
+    mode: 'simple',
+    branding,
+    sidebar_position: 'right',
   });
 }
 
@@ -153,58 +153,80 @@ export function resolveListingMedia(media: ReihMediaItem[] = LISTING_MEDIA): Rei
   }));
 }
 
-const WIDGET_BRANDING = {
-  logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
-  text_primary: '#071121FF',
-  text_secondary: '#1B232E',
-  primary_color: '#3ED37A',
-  heading: 'Reimagine Your Space',
-  sub_heading: 'AI-powered room redesign',
-  footer_text: '',
+export type ReihWidgetBranding = {
+  logo: string;
+  text_primary: string;
+  text_secondary: string;
+  primary_color: string;
+  heading: string;
+  sub_heading: string;
+  footer_text: string;
 };
 
-export { WIDGET_BRANDING };
-
-/** CSS-safe hex for host page accents (strips 8-digit alpha suffix). */
-export function getWidgetHostCssVars(): Record<string, string> {
-  const textPrimary = WIDGET_BRANDING.text_primary.replace(/ff$/i, '');
+/** Branding block — must match the embed spec exactly (no extra keys). */
+export function buildWidgetBranding(): ReihWidgetBranding {
   return {
-    '--reih-primary': WIDGET_BRANDING.primary_color,
-    '--reih-text-primary': textPrimary,
-    '--reih-text-secondary': WIDGET_BRANDING.text_secondary,
+    logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
+    text_primary: '#071121FF',
+    text_secondary: '#1B232E',
+    primary_color: '#3ED37A',
+    heading: 'Reimagine Your Space',
+    sub_heading: 'AI-powered room redesign',
+    footer_text: '',
+  };
+}
+
+/** CSS vars for host page accents only (widget gets exact branding via buildWidgetBranding). */
+export function getWidgetHostCssVars(): Record<string, string> {
+  const branding = buildWidgetBranding();
+  return {
+    '--reih-primary': branding.primary_color,
+    '--reih-text-primary': branding.text_primary.replace(/ff$/i, ''),
+    '--reih-text-secondary': branding.text_secondary,
+  };
+}
+
+const widgetCallbacks = {
+  onComplete: (detail: unknown) => {
+    console.log('[reih] onComplete:', detail);
+  },
+  onError: (err: unknown) => {
+    console.error('[reih] onError:', err);
+  },
+  onClose: () => {
+    console.log('[reih] onClose: widget closed');
+  },
+};
+
+/**
+ * CDN script-embed config for window.reihWidgetConfig.
+ * public_key comes from the <script data-public-key> attribute, not this object.
+ */
+export function buildScriptEmbedWidgetConfig() {
+  return {
+    media: resolveListingMedia(),
+    mode: 'simple' as const,
+    branding: buildWidgetBranding(),
+    sidebar_position: 'right' as const,
+    ...widgetCallbacks,
   };
 }
 
 export function buildWidgetConfig() {
   return {
     public_key: WIDGET_PUBLIC_KEY,
-    media: resolveListingMedia(),
-    mode: 'simple' as const,
-    branding: WIDGET_BRANDING,
-    sidebar_position: 'right' as const,
-    onComplete: (detail: unknown) => {
-      console.log('[reih] onComplete:', detail);
-    },
-    onError: (err: unknown) => {
-      console.error('[reih] onError:', err);
-    },
-    onClose: () => {
-      console.log('[reih] onClose: widget closed');
-    },
+    ...buildScriptEmbedWidgetConfig(),
   };
 }
 
 /** Config for reimaginehome-widget npm package — includes public_key in configure() */
 export function buildNpmWidgetConfigureOptions() {
-  const base = buildWidgetConfig();
   return {
     public_key: WIDGET_PUBLIC_KEY,
-    media: base.media,
-    mode: base.mode,
-    branding: base.branding,
-    sidebar_position: base.sidebar_position,
-    onComplete: base.onComplete,
-    onError: base.onError,
-    onClose: base.onClose,
+    media: resolveListingMedia(),
+    mode: 'simple' as const,
+    branding: buildWidgetBranding(),
+    sidebar_position: 'right' as const,
+    ...widgetCallbacks,
   };
 }
