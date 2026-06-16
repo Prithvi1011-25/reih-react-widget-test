@@ -13,40 +13,49 @@ import {
 
 const WIDGET_SCRIPT_ID = 'reih-widget-script';
 
+function setScriptEmbedConfig(): void {
+  const config = buildScriptEmbedWidgetConfig();
+  // public_key comes from <script data-public-key>, not window.reihWidgetConfig
+  (window as unknown as { reihWidgetConfig: typeof config }).reihWidgetConfig =
+    config;
+}
+
 export function ScriptEmbedPage() {
   const openingRef = useRef(false);
 
   useEffect(() => {
-    const config = buildScriptEmbedWidgetConfig();
-    // public_key comes from <script data-public-key>, not window.reihWidgetConfig
-    (window as unknown as { reihWidgetConfig: typeof config }).reihWidgetConfig =
-      config;
-    console.log('[script-embed] Widget config created', config.branding);
-  }, []);
+    setScriptEmbedConfig();
+    console.log('[script-embed] Widget config created');
 
-  useEffect(() => {
-    const existing = document.getElementById(
+    let script = document.getElementById(
       WIDGET_SCRIPT_ID,
     ) as HTMLScriptElement | null;
 
-    if (!existing) {
-      const script = document.createElement('script');
+    const onScriptLoad = () => {
+      setScriptEmbedConfig();
+      console.log('[script-embed] Widget script loaded');
+    };
+
+    if (!script) {
+      script = document.createElement('script');
       script.id = WIDGET_SCRIPT_ID;
       script.src = `${WIDGET_SCRIPT_URL}?v=${Date.now()}`;
       script.async = true;
       script.setAttribute('data-public-key', WIDGET_PUBLIC_KEY);
-      script.onload = () => {
-        console.log('[script-embed] Widget script loaded');
-      };
+      script.addEventListener('load', onScriptLoad);
       script.onerror = () => {
         console.error('[script-embed] Widget script failed to load');
       };
       document.body.appendChild(script);
-    } else if (window.reihWidget?.open) {
+    } else if (!window.reihWidget?.open) {
+      script.addEventListener('load', onScriptLoad);
+    } else {
       console.log('[script-embed] Widget script already loaded');
     }
 
     return () => {
+      script?.removeEventListener('load', onScriptLoad);
+      window.reihWidget?.destroy?.();
       clearReihLoader();
     };
   }, []);
@@ -56,7 +65,11 @@ export function ScriptEmbedPage() {
 
     openingRef.current = true;
     try {
+      setScriptEmbedConfig();
       const widget = await waitForReihWidget();
+      // Reset stuck CDN widget state (opening flag / stale loader) before each open
+      widget.destroy();
+      clearReihLoader();
       await openReihWithMedia(widget, media);
     } catch (error) {
       clearReihLoader();

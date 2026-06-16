@@ -78,7 +78,7 @@ export type ReihWidgetOpener = {
   open: (overrides?: Record<string, unknown>) => Promise<void>;
 };
 
-/** Host-side open helper — clears stale loader, then opens with resolved media. */
+/** Host-side open helper — opens with resolved media and latest widget options. */
 export async function openReihWithMedia(
   widget: ReihWidgetOpener,
   media: ReihMediaItem[],
