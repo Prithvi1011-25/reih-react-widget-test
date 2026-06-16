@@ -145,13 +145,13 @@ export function resolveListingMedia(media: ReihMediaItem[] = LISTING_MEDIA): Rei
 }
 
 const WIDGET_BRANDING = {
-  fav_icon: 'https://placehold.co/32x32/png?text=F',
   logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
-  text_primary: '#4C1D95',
-  text_secondary: '#7C3AED',
+  text_primary: '#071121FF',
+  text_secondary: '#1B232E',
+  primary_color: '#3ED37A',
   heading: 'Reimagine Your Space',
   sub_heading: 'AI-powered room redesign',
-  footer_text: 'Powered by ReimagineHome',
+  footer_text: '',
 };
 
 const WIDGET_LANGUAGE = [
@@ -175,15 +175,16 @@ export function buildWidgetConfig() {
     media: resolveListingMedia(),
     mode: 'simple' as const,
     branding: WIDGET_BRANDING,
+    sidebar_position: 'right' as const,
     language: WIDGET_LANGUAGE,
     onComplete: (detail: unknown) => {
-      console.log('Widget completed:', detail);
+      console.log('[reih] onComplete:', detail);
     },
     onError: (err: unknown) => {
-      console.error('Widget error:', err);
+      console.error('[reih] onError:', err);
     },
     onClose: () => {
-      console.log('Widget closed');
+      console.log('[reih] onClose: widget closed');
     },
   };
 }
@@ -196,7 +197,9 @@ export function buildNpmWidgetConfigureOptions() {
     media: base.media,
     mode: base.mode,
     branding: base.branding,
+    sidebar_position: base.sidebar_position,
     language: base.language,
+    onComplete: base.onComplete,
     onError: base.onError,
     onClose: base.onClose,
   };

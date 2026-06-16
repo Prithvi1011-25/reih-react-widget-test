@@ -7,6 +7,7 @@ declare global {
       media: ReihMediaItem[];
       mode: string;
       user_id?: string;
+      sidebar_position?: 'left' | 'right';
       branding: Record<string, string>;
       language: Array<{
         code: string;
