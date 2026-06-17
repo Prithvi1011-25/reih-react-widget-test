@@ -63,6 +63,10 @@ export const LISTING_MEDIA: ReihMediaItem[] = [
     // Invalid format test — plain text file, not an image
     image_url: 'https://images.unsplash.com/photo-1630699144919-681cf308ae82?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
+  {
+    // Invalid format test — plain text file, not an image
+    image_url: 'https://images.unsplash.com/photo-1632800617918-2cb4eda203d1?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
 ];
 
 /** DOM id used by reimaginehome-widget for the session loader overlay */
