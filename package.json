@@ -1,7 +1,8 @@
 {
-  "name": "react",
+  "name": "reimaginehome-widget-react-demo",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "React demo for embedding the ReimagineHome widget via CDN script",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,9 +12,7 @@
   },
   "dependencies": {
     "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "react-router-dom": "^7.17.0",
-    "reimaginehome-widget": "^0.0.2"
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

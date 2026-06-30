@@ -1,73 +1,70 @@
+import {
+  PUBLIC_ASSET_ORIGIN,
+  WIDGET_LANGUAGE,
+  WIDGET_PUBLIC_KEY,
+  WIDGET_SCRIPT_URL,
+  isLocalDevHost,
+  isWidgetPublicKeyConfigured,
+} from './widgetEnv';
+
+export {
+  PUBLIC_ASSET_ORIGIN,
+  WIDGET_LANGUAGE,
+  WIDGET_PUBLIC_KEY,
+  WIDGET_SCRIPT_URL,
+  isWidgetPublicKeyConfigured,
+};
+
 export type ReihMediaItem = {
   image_url: string;
 };
 
-export {
-  WIDGET_DEV_API_BASE_URL,
-  WIDGET_DEV_APP_URL,
-} from './widgetEnv';
+export type DemoMediaItem = ReihMediaItem & {
+  hero?: boolean;
+};
 
-export const WIDGET_SCRIPT_URL =
-  'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app/widget.js';
+export const LISTING = {
+  title: 'Willow Terrace Residence',
+  facts: ['4 bed', '2 bath', '2 story', 'Terrace'],
+};
 
-/** Replace with your real public key from ReimagineHome */
-export const WIDGET_PUBLIC_KEY = 'public_key';
+const WILLOW_TERRACE_BASE = '/images/willow-terrace';
 
-export const LISTING_MEDIA: ReihMediaItem[] = [
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=600&fit=crop',
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop',
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop',
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&h=600&fit=crop',
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop',
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1721244653580-79577d2822a2?q=80&w=2096&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1619418602850-35ad20aa1700?q=80&w=1771&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-  },
-  {
-    image_url:
-      'https://images.unsplash.com/photo-1721244654210-a505a99661e9?q=80&w=1704&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    image_url: '/images/apartment-building.png',
-  },
-  {
-    image_url: '/images/large-test-25mb.jpg',
-  },
-  {
-    image_url: '/images/large-test-30mb.jpg',
-  },
-  {
-    // Invalid format test — plain text file, not an image
-    image_url: '/images/invalid-format.txt',
-  },
-  {
-    // Invalid format test — plain text file, not an image
-    image_url: 'https://images.unsplash.com/photo-1630699144919-681cf308ae82?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    // Invalid format test — plain text file, not an image
-    image_url: 'https://images.unsplash.com/photo-1632800617918-2cb4eda203d1?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
+export const DEMO_MEDIA: DemoMediaItem[] = [
+  { hero: true, image_url: `${WILLOW_TERRACE_BASE}/08_living_room_furnished.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/07_entry_hallway.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/09_living_room_angle2.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/living_room_angle3.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/living_room_angle4.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/10_kitchen_furnished.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/11_kitchen_dining_angle.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/13_staircase_landing.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/14_master_bedroom_furnished.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/15_bedroom2_empty.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/16_kids_room_furnished.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/16_kids_room_angle2.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/17_study_empty.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/18_bathroom1_empty.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/19_bathroom2_empty.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/20_laundry_utility.png` },
+  { image_url: `${WILLOW_TERRACE_BASE}/21_balcony_terrace.png` },
 ];
+
+/** @deprecated Use DEMO_MEDIA */
+export const LISTING_MEDIA = DEMO_MEDIA;
+
+export function classifyMedia(items: DemoMediaItem[] = DEMO_MEDIA) {
+  const hero = items.find((item) => item.hero) ?? items[0];
+  const gallery = items.filter((item) => item !== hero);
+  return { hero, gallery };
+}
+
+/** Widget only wants { image_url } — strip host-side flags like `hero`. */
+export function toWidgetMedia(items: DemoMediaItem[]): ReihMediaItem[] {
+  return items.map((item) => ({
+    image_url: resolveMediaUrl(item.image_url),
+  }));
+}
 
 /** DOM id used by reimaginehome-widget for the session loader overlay */
 export const REIH_LOADER_ID = 'reih-host-loader';
@@ -82,21 +79,156 @@ export type ReihWidgetOpener = {
   open: (overrides?: Record<string, unknown>) => Promise<void>;
 };
 
+export type ReihWidgetBrandingColors = {
+  primary: string;
+  secondary: string;
+  text_primary: string;
+  text_secondary: string;
+};
+
+export type ReihWidgetBranding = {
+  logo: string;
+  colors: ReihWidgetBrandingColors;
+};
+
+export type ReihWidgetCopyBlock = {
+  text: string;
+  subtext: string;
+  actions_label: string;
+};
+
+export function buildWidgetBranding(): ReihWidgetBranding {
+  return {
+    logo: '/styldod-logo.png',
+    colors: {
+      primary: '#071121FF',
+      secondary: '#1B232E',
+      text_primary: '#071121FF',
+      text_secondary: '#1B232E',
+    },
+  };
+}
+
+export function buildWidgetBody(): ReihWidgetCopyBlock {
+  return {
+    text: 'Do you like this arrangement?',
+    subtext:
+      'Contact the advertiser to ask for details and schedule a live viewing.',
+    actions_label: 'Close and send message',
+  };
+}
+
+/** Optional header copy — uncomment in buildWidgetOptions() to enable. */
+export function buildWidgetHeader(): ReihWidgetCopyBlock {
+  return {
+    text: 'Visualize Your Space',
+    subtext: 'See how this property could look with different styles',
+    actions_label: 'Schedule a Viewing',
+  };
+}
+
+/** Optional footer copy — uncomment in buildWidgetOptions() to enable. */
+export function buildWidgetFooter(): ReihWidgetCopyBlock {
+  return {
+    text: 'Powered by ReimagineHome',
+    subtext: 'AI-powered interior design at your fingertips',
+    actions_label: 'Learn More',
+  };
+}
+
+/** CSS vars for host page accents (widget receives branding via configure/open). */
+export function getWidgetHostCssVars(): Record<string, string> {
+  const { colors } = buildWidgetBranding();
+  return {
+    '--reih-primary': colors.primary.replace(/ff$/i, ''),
+    '--reih-text-primary': colors.text_primary.replace(/ff$/i, ''),
+    '--reih-text-secondary': colors.text_secondary,
+  };
+}
+
+/** Local /images/* paths need a public URL the widget API can fetch (not localhost). */
+export function resolveMediaUrl(url: string): string {
+  if (!url.startsWith('/') || typeof window === 'undefined') {
+    return url;
+  }
+
+  const isLocal = isLocalDevHost(window.location.hostname);
+  const origin =
+    isLocal && PUBLIC_ASSET_ORIGIN
+      ? PUBLIC_ASSET_ORIGIN.replace(/\/$/, '')
+      : window.location.origin;
+
+  if (isLocal && !PUBLIC_ASSET_ORIGIN) {
+    console.warn(
+      '[reih] Widget cannot load local images without VITE_PUBLIC_ASSET_ORIGIN. Deploy the demo or use an ngrok URL, then set it in .env and restart.',
+    );
+  }
+
+  return `${origin}${url}`;
+}
+
+export function resolveDemoMedia(media: DemoMediaItem[] = DEMO_MEDIA): ReihMediaItem[] {
+  return toWidgetMedia(media);
+}
+
+/** @deprecated Use resolveDemoMedia */
+export const resolveListingMedia = resolveDemoMedia;
+
+const widgetCallbacks = {
+  onComplete: (detail: unknown) => {
+    console.log('[reih] onComplete:', detail);
+  },
+  onError: (err: unknown) => {
+    console.error('[reih] onError:', err);
+  },
+  onClose: () => {
+    console.log('[reih] onClose: widget closed');
+  },
+  onActionClick: (event: unknown) => {
+    console.log('[reih] onActionClick:', event);
+  },
+};
+
+/** Shared widget options used by configure(), window.reihWidgetConfig, and open(). */
+export function buildWidgetOptions() {
+  const branding = buildWidgetBranding();
+  return {
+    mode: 'simple' as const,
+    language: WIDGET_LANGUAGE,
+    // user_id: 'demo-user-123',
+    // session_id: 'demo-client-session-123',
+    // listing_id: 'demo-listing-123',
+    branding: {
+      ...branding,
+      logo: resolveMediaUrl(branding.logo),
+    },
+    body: buildWidgetBody(),
+    // header: buildWidgetHeader(),
+    // footer: buildWidgetFooter(),
+    ...widgetCallbacks,
+  };
+}
+
+/**
+ * CDN script-embed config for window.reihWidgetConfig.
+ * public_key comes from the <script data-public-key> attribute, not this object.
+ */
+export function buildScriptEmbedWidgetConfig() {
+  return {
+    media: resolveDemoMedia(),
+    ...buildWidgetOptions(),
+  };
+}
+
 /** Host-side open helper — opens with resolved media and latest widget options. */
 export async function openReihWithMedia(
   widget: ReihWidgetOpener,
-  media: ReihMediaItem[],
+  media: DemoMediaItem[],
 ): Promise<void> {
   clearReihLoader();
   await widget.open({
-    media: media.map((item) => ({
-      ...item,
-      image_url: resolveMediaUrl(item.image_url),
-    })),
-    mode: 'simple',
-    branding: buildWidgetBranding(),
-    sidebar_position: 'right',
-    language: buildWidgetLanguage(),
+    media: toWidgetMedia(media),
+    ...buildWidgetOptions(),
   });
 }
 
@@ -144,114 +276,4 @@ export function waitForReihWidget(
 
     tryResolve();
   });
-}
-
-/** Local /images/* paths need a full URL for the widget backend to fetch them */
-export function resolveMediaUrl(url: string): string {
-  if (url.startsWith('/') && typeof window !== 'undefined') {
-    return `${window.location.origin}${url}`;
-  }
-  return url;
-}
-
-export function resolveListingMedia(media: ReihMediaItem[] = LISTING_MEDIA): ReihMediaItem[] {
-  return media.map((item) => ({
-    ...item,
-    image_url: resolveMediaUrl(item.image_url),
-  }));
-}
-
-export type ReihWidgetLanguage = {
-  code: string;
-  name: string;
-  nativeName: string;
-};
-
-export function buildWidgetLanguage(): ReihWidgetLanguage[] {
-  return [
-    { code: 'en-US', name: 'English (United States)', nativeName: 'English (US)' },
-    { code: 'en-GB', name: 'English (United Kingdom)', nativeName: 'English (UK)' },
-    { code: 'pl-PL', name: 'Polish', nativeName: 'Polski' },
-    { code: 'es-ES', name: 'Spanish', nativeName: 'Español' },
-  ];
-}
-
-export type ReihWidgetBranding = {
-  logo: string;
-  text_primary: string;
-  text_secondary: string;
-  primary_color: string;
-  heading: string;
-  sub_heading: string;
-  footer_text: string;
-};
-
-/** Branding block — must match the embed spec exactly (no extra keys). */
-export function buildWidgetBranding(): ReihWidgetBranding {
-  return {
-    logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
-    text_primary: '#071121FF',
-    text_secondary: '#1B232E',
-    primary_color: '#3ED37A',
-    heading: 'Reimagine Your Space',
-    sub_heading: 'AI-powered room redesign',
-    footer_text: '',
-  };
-}
-
-/** CSS vars for host page accents only (widget gets exact branding via buildWidgetBranding). */
-export function getWidgetHostCssVars(): Record<string, string> {
-  const branding = buildWidgetBranding();
-  return {
-    '--reih-primary': branding.primary_color,
-    '--reih-text-primary': branding.text_primary.replace(/ff$/i, ''),
-    '--reih-text-secondary': branding.text_secondary,
-  };
-}
-
-const widgetCallbacks = {
-  onComplete: (detail: unknown) => {
-    console.log('[reih] onComplete:', detail);
-  },
-  onError: (err: unknown) => {
-    console.error('[reih] onError:', err);
-  },
-  onClose: () => {
-    console.log('[reih] onClose: widget closed');
-  },
-};
-
-/**
- * CDN script-embed config for window.reihWidgetConfig.
- * public_key comes from the <script data-public-key> attribute, not this object.
- */
-export function buildScriptEmbedWidgetConfig() {
-  return {
-    media: resolveListingMedia(),
-    mode: 'simple' as const,
-    branding: buildWidgetBranding(),
-    sidebar_position: 'right' as const,
-    language: buildWidgetLanguage(),
-    ...widgetCallbacks,
-  };
-}
-
-export function buildWidgetConfig() {
-  return {
-    public_key: WIDGET_PUBLIC_KEY,
-    ...buildScriptEmbedWidgetConfig(),
-  };
-}
-
-/** Config for reimaginehome-widget npm package — includes public_key in configure() */
-export function buildNpmWidgetConfigureOptions() {
-  return {
-    public_key: WIDGET_PUBLIC_KEY,
-    media: resolveListingMedia(),
-    mode: 'simple' as const,
-    branding: buildWidgetBranding(),
-    sidebar_position: 'right' as const,
-    language: buildWidgetLanguage(),
-    ...widgetCallbacks,
-  };
 }

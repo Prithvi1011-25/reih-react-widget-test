@@ -1,12 +1,36 @@
-/** Dev widget iframe app — matches the CDN script-embed environment */
-export const WIDGET_DEV_APP_URL =
-  'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app';
+/** Production widget script URL — override with VITE_REIH_WIDGET_SCRIPT_URL if needed. */
+export const WIDGET_SCRIPT_URL =
+  import.meta.env.VITE_REIH_WIDGET_SCRIPT_URL ||
+  'https://widget.styldod.com/widget.js';
 
-/** Dev session API — npm package publishes with prod baked in; patched at build time */
-export const WIDGET_DEV_API_BASE_URL =
-  'https://oetb78o6i5.execute-api.us-west-2.amazonaws.com/dev';
+/**
+ * Public origin for /images/* when running on localhost.
+ * The widget API must download photos from a public URL — not localhost.
+ * Set to your deployed demo URL (or ngrok tunnel) when testing locally.
+ */
+export const PUBLIC_ASSET_ORIGIN =
+  import.meta.env.VITE_PUBLIC_ASSET_ORIGIN || '';
 
-export const WIDGET_PROD_APP_URL = 'https://widget.styldod.com';
+/**
+ * Your ReimagineHome public key.
+ * Set VITE_REIH_PUBLIC_KEY in `.env` (copy from `.env.example`).
+ */
+export const WIDGET_PUBLIC_KEY = import.meta.env.VITE_REIH_PUBLIC_KEY || '';
 
-export const WIDGET_PROD_API_BASE_URL =
-  'https://oetb78o6i5.execute-api.us-west-2.amazonaws.com/prod';
+/** Widget UI language — overrides the default tied to your public key (e.g. pl-PL for Otodom). */
+export const WIDGET_LANGUAGE =
+  import.meta.env.VITE_REIH_WIDGET_LANGUAGE || 'en-US';
+
+const PLACEHOLDER_KEYS = new Set(['', 'your_public_key_here', 'public_key']);
+
+export function isWidgetPublicKeyConfigured(): boolean {
+  return !PLACEHOLDER_KEYS.has(WIDGET_PUBLIC_KEY.trim());
+}
+
+export function isLocalDevHost(hostname: string): boolean {
+  return (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '[::1]'
+  );
+}

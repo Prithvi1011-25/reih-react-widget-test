@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { ListingDemoPage } from '../components/ListingDemoPage';
 import {
+  DEMO_MEDIA,
   WIDGET_PUBLIC_KEY,
   WIDGET_SCRIPT_URL,
   buildScriptEmbedWidgetConfig,
   clearReihLoader,
+  isWidgetPublicKeyConfigured,
   openReihWithMedia,
-  resolveListingMedia,
   waitForReihWidget,
-  type ReihMediaItem,
+  type DemoMediaItem,
 } from '../widgetConfig';
 
 const WIDGET_SCRIPT_ID = 'reih-widget-script';
 
 function setScriptEmbedConfig(): void {
   const config = buildScriptEmbedWidgetConfig();
-  // public_key comes from <script data-public-key>, not window.reihWidgetConfig
   (window as unknown as { reihWidgetConfig: typeof config }).reihWidgetConfig =
     config;
 }
@@ -24,8 +24,14 @@ export function ScriptEmbedPage() {
   const openingRef = useRef(false);
 
   useEffect(() => {
+    if (!isWidgetPublicKeyConfigured()) {
+      console.warn(
+        '[script-embed] Public key not set. Add VITE_REIH_PUBLIC_KEY to `.env` (see README), then restart `npm run dev`.',
+      );
+      return;
+    }
+
     setScriptEmbedConfig();
-    console.log('[script-embed] Widget config created');
 
     let script = document.getElementById(
       WIDGET_SCRIPT_ID,
@@ -33,13 +39,12 @@ export function ScriptEmbedPage() {
 
     const onScriptLoad = () => {
       setScriptEmbedConfig();
-      console.log('[script-embed] Widget script loaded');
     };
 
     if (!script) {
       script = document.createElement('script');
       script.id = WIDGET_SCRIPT_ID;
-      script.src = `${WIDGET_SCRIPT_URL}?v=${Date.now()}`;
+      script.src = WIDGET_SCRIPT_URL;
       script.async = true;
       script.setAttribute('data-public-key', WIDGET_PUBLIC_KEY);
       script.addEventListener('load', onScriptLoad);
@@ -49,8 +54,6 @@ export function ScriptEmbedPage() {
       document.body.appendChild(script);
     } else if (!window.reihWidget?.open) {
       script.addEventListener('load', onScriptLoad);
-    } else {
-      console.log('[script-embed] Widget script already loaded');
     }
 
     return () => {
@@ -60,14 +63,14 @@ export function ScriptEmbedPage() {
     };
   }, []);
 
-  const openWidget = useCallback(async (media: ReihMediaItem[]) => {
+  const openWidget = useCallback(async (media: DemoMediaItem[]) => {
+    if (!isWidgetPublicKeyConfigured()) return;
     if (openingRef.current) return;
 
     openingRef.current = true;
     try {
       setScriptEmbedConfig();
       const widget = await waitForReihWidget();
-      // Reset stuck CDN widget state (opening flag / stale loader) before each open
       widget.destroy();
       clearReihLoader();
       await openReihWithMedia(widget, media);
@@ -80,13 +83,11 @@ export function ScriptEmbedPage() {
   }, []);
 
   const handleOpenAll = useCallback(() => {
-    console.log('[script-embed] Open button clicked (all listing media)');
-    void openWidget(resolveListingMedia());
+    void openWidget(DEMO_MEDIA);
   }, [openWidget]);
 
   const handleOpenSingle = useCallback(
-    (media: ReihMediaItem) => {
-      console.log('[script-embed] Floating button clicked:', media.image_url);
+    (media: DemoMediaItem) => {
       void openWidget([media]);
     },
     [openWidget],
@@ -94,10 +95,6 @@ export function ScriptEmbedPage() {
 
   return (
     <ListingDemoPage
-      activeNav="script-embed"
-      title="REIH React Widget — CDN Script Embed"
-      integrationBadge="Integration: CDN widget.js + window.reihWidgetConfig"
-      description="Tests the ReimagineHome hybrid iframe widget via a dynamically loaded script tag and data-public-key attribute — the original embed approach."
       onOpenAll={handleOpenAll}
       onOpenSingle={handleOpenSingle}
     />
